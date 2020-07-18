@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
 import CommentList from '../components/commentList';
 import ItemList from '../components/itemList';
-import SimpleRating from '../components/rating';
 import Feedback from '../components/feedback';
 import Typography from '@material-ui/core/Typography';
 

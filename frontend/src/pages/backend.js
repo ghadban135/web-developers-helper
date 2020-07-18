@@ -59,8 +59,8 @@ export default function Backend() {
 	const [springBoot, setSpringBoot] = React.useState([]);
 	const [express, setExpress] = React.useState([]);
 	const [django, setDjango] = React.useState([]);
-	useEffect(async () => {
-		await getSubCategory(1).then(function (result) {
+	useEffect(() => {
+		getSubCategory(1).then(function (result) {
 			setSubTitles(result);
 		});
 		getContent(5).then(function (result) {

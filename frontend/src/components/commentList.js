@@ -1,10 +1,6 @@
 import React from 'react';
-import { List, ListItem, makeStyles, Divider, Box } from '@material-ui/core';
+import { List, ListItem, makeStyles, Divider } from '@material-ui/core';
 import ListItemText from '@material-ui/core/ListItemText';
-import Pagination from '@material-ui/lab/Pagination';
-import Typography from '@material-ui/core/Typography';
-import StarIcon from '@material-ui/icons/Star';
-import { yellow } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
 	root: {

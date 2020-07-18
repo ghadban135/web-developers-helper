@@ -1,20 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+// import App from './App';
 import * as serviceWorker from './serviceWorker';
-import SimpleRating from './components/rating';
 import MiniDrawer from './components/drawers';
-import ScrollableTabsButtonAuto from './pages/frontend';
 
 ReactDOM.render(
-  <React.StrictMode>
-    {/* <ScrollableTabsButtonAuto></ScrollableTabsButtonAuto> */}
-    <MiniDrawer></MiniDrawer>
-    {/* <SimpleRating></SimpleRating> */}
-    {/* <App /> */}
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<MiniDrawer></MiniDrawer>
+		{/* <App /> */}
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
