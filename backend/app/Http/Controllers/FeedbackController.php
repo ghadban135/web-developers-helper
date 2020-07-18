@@ -104,6 +104,24 @@ class FeedbackController extends Controller
 
     }
 
+    public function showAll($id)
+    {
+        $resultAll = Feedback::where('content_id', $id)->with('user')->get();
+
+       if(!sizeof($resultAll)){
+           return response()->json([
+               'success' => false,
+               'message' => 'No feedback found'
+           ], 404);
+       }
+
+       return response()->json([
+           'success' => true,
+           'feedback' => $resultAll,
+       ], 200);
+
+    }
+
     /**
      * Update the specified resource in storage.
      *

@@ -29,6 +29,7 @@ Route::post('/subcategory/{id}', 'SubcategoryController@update'); // i should pu
 Route::delete('/subcategory/{id}', 'SubcategoryController@destroy'); // i should put inside admin middleware
 Route::get('/content', 'ContentController@index');
 Route::get('/content/{id}', 'ContentController@show');
+Route::get('/content-feedback/{id}', 'FeedbackController@showAll');
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/ping', function(){

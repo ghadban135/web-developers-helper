@@ -11,4 +11,9 @@ class Feedback extends Model
     protected $fillable = [
         'user_id', 'content_id', 'comment', 'rating'
     ];
+    
+    public function user()
+{
+    return $this->belongsTo(User::class, 'user_id', 'id');
+}
 }
