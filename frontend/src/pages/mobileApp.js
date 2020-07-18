@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Page from '../components/page';
-import { getSubCategory } from '../api/getContent';
+import { getSubCategory, getContent } from '../api/getContent';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -55,9 +55,17 @@ export default function MobileApp() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 	const [subTitles, setSubTitles] = React.useState([]);
+	const [reactNative, setReactNative] = React.useState([]);
+	const [flutter, setFlutter] = React.useState([]);
 	useEffect(() => {
 		getSubCategory(6).then(function (result) {
 			setSubTitles(result);
+		});
+		getContent(24).then(function (result) {
+			setReactNative(result);
+		});
+		getContent(25).then(function (result) {
+			setFlutter(result);
 		});
 	}, []);
 
@@ -84,10 +92,10 @@ export default function MobileApp() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<Page />
+				<Page content={reactNative} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<Page />
+				<Page content={flutter} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
 				<Page />

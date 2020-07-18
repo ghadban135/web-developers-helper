@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Page from '../components/page';
-import { getSubCategory } from '../api/getContent';
+import { getSubCategory, getContent } from '../api/getContent';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -55,9 +55,29 @@ export default function PrograminLanguage() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 	const [subTitles, setSubTitles] = React.useState([]);
+	const [php, setPhp] = React.useState([]);
+	const [javaScript, setJavaScript] = React.useState([]);
+	const [python, setPython] = React.useState([]);
+	const [java, setJava] = React.useState([]);
+	const [rust, setRust] = React.useState([]);
 	useEffect(() => {
 		getSubCategory(2).then(function (result) {
 			setSubTitles(result);
+		});
+		getContent(9).then(function (result) {
+			setPhp(result);
+		});
+		getContent(10).then(function (result) {
+			setJavaScript(result);
+		});
+		getContent(11).then(function (result) {
+			setPython(result);
+		});
+		getContent(12).then(function (result) {
+			setJava(result);
+		});
+		getContent(13).then(function (result) {
+			setRust(result);
 		});
 	}, []);
 
@@ -84,19 +104,19 @@ export default function PrograminLanguage() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<Page />
+				<Page content={php} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<Page />
+				<Page content={javaScript} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<Page />
+				<Page content={python} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
-				<Page />
+				<Page content={java} />
 			</TabPanel>
 			<TabPanel value={value} index={4}>
-				<Page />
+				<Page content={rust} />
 			</TabPanel>
 			<TabPanel value={value} index={5}>
 				<Page />

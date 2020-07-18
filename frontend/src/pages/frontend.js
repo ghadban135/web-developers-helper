@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Page from '../components/page';
-import { getSubCategory } from '../api/getContent';
+import { getSubCategory, getContent } from '../api/getContent';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -55,9 +55,25 @@ export default function FrontEnd() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 	const [subTitles, setSubTitles] = React.useState([]);
+	const [html, setHtml] = React.useState([]);
+	const [react, setReact] = React.useState([]);
+	const [angular, setAngular] = React.useState([]);
+	const [vue, setVue] = React.useState([]);
 	useEffect(() => {
 		getSubCategory(0).then(function (result) {
 			setSubTitles(result);
+		});
+		getContent(1).then(function (result) {
+			setHtml(result);
+		});
+		getContent(2).then(function (result) {
+			setReact(result);
+		});
+		getContent(3).then(function (result) {
+			setAngular(result);
+		});
+		getContent(4).then(function (result) {
+			setVue(result);
 		});
 	}, []);
 
@@ -84,16 +100,16 @@ export default function FrontEnd() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<Page />
+				<Page content={html} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<Page />
+				<Page content={react} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<Page />
+				<Page content={angular} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
-				<Page />
+				<Page content={vue} />
 			</TabPanel>
 			<TabPanel value={value} index={4}>
 				<Page />

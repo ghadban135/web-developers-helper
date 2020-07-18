@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Page from '../components/page';
-import { getSubCategory } from '../api/getContent';
+import { getSubCategory, getContent } from '../api/getContent';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -55,20 +55,26 @@ export default function Backend() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 	const [subTitles, setSubTitles] = React.useState([]);
-	useEffect(() => {
-		getSubCategory(1).then(function (result) {
+	const [laravel, setLaravel] = React.useState([]);
+	const [springBoot, setSpringBoot] = React.useState([]);
+	const [express, setExpress] = React.useState([]);
+	const [django, setDjango] = React.useState([]);
+	useEffect(async () => {
+		await getSubCategory(1).then(function (result) {
 			setSubTitles(result);
 		});
-
-		// async function fetchData() {
-		// 	const response = await fetch(`http://localhost:8000/api/subcategory/1`);
-		// 	const result = await response.json();
-		// 	const arr = result.subcategory.map(({ name }) => name);
-		// 	if (result.success) {
-		// 		setSubTitles(arr);
-		// 	}
-		// }
-		// fetchData();
+		getContent(5).then(function (result) {
+			setLaravel(result);
+		});
+		getContent(6).then(function (result) {
+			setSpringBoot(result);
+		});
+		getContent(7).then(function (result) {
+			setExpress(result);
+		});
+		getContent(8).then(function (result) {
+			setDjango(result);
+		});
 	}, []);
 
 	const handleChange = (event, newValue) => {
@@ -94,16 +100,16 @@ export default function Backend() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<Page />
+				<Page content={laravel} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<Page />
+				<Page content={springBoot} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<Page />
+				<Page content={express} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
-				<Page />
+				<Page content={django} />
 			</TabPanel>
 			<TabPanel value={value} index={4}>
 				<Page />

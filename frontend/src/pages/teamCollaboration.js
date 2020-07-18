@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Page from '../components/page';
-import { getSubCategory } from '../api/getContent';
+import { getSubCategory, getContent } from '../api/getContent';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -55,9 +55,21 @@ export default function TeamCollabration() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 	const [subTitles, setSubTitles] = React.useState([]);
+	const [git, setGit] = React.useState([]);
+	const [agile, setAgile] = React.useState([]);
+	const [waterfall, setWaterfall] = React.useState([]);
 	useEffect(() => {
 		getSubCategory(4).then(function (result) {
 			setSubTitles(result);
+		});
+		getContent(17).then(function (result) {
+			setGit(result);
+		});
+		getContent(18).then(function (result) {
+			setAgile(result);
+		});
+		getContent(19).then(function (result) {
+			setWaterfall(result);
 		});
 	}, []);
 
@@ -84,13 +96,13 @@ export default function TeamCollabration() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<Page />
+				<Page content={git} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<Page />
+				<Page content={agile} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<Page />
+				<Page content={waterfall} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
 				<Page />

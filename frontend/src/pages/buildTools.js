@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Page from '../components/page';
-import { getSubCategory } from '../api/getContent';
+import { getSubCategory, getContent } from '../api/getContent';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -55,9 +55,25 @@ export default function BuildTools() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 	const [subTitles, setSubTitles] = React.useState([]);
+	const [npm, setNpm] = React.useState([]);
+	const [yarn, setYarn] = React.useState([]);
+	const [docker, setDocker] = React.useState([]);
+	const [ssh, setSsh] = React.useState([]);
 	useEffect(() => {
 		getSubCategory(5).then(function (result) {
 			setSubTitles(result);
+		});
+		getContent(20).then(function (result) {
+			setNpm(result);
+		});
+		getContent(21).then(function (result) {
+			setYarn(result);
+		});
+		getContent(22).then(function (result) {
+			setDocker(result);
+		});
+		getContent(23).then(function (result) {
+			setSsh(result);
 		});
 	}, []);
 
@@ -84,16 +100,16 @@ export default function BuildTools() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<Page />
+				<Page content={npm} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<Page />
+				<Page content={yarn} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<Page />
+				<Page content={docker} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
-				<Page />
+				<Page content={ssh} />
 			</TabPanel>
 			<TabPanel value={value} index={4}>
 				<Page />

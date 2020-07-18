@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Page from '../components/page';
-import { getSubCategory } from '../api/getContent';
+import { getSubCategory, getContent } from '../api/getContent';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -55,9 +55,21 @@ export default function Database() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 	const [subTitles, setSubTitles] = React.useState([]);
+	const [mysql, setMysql] = React.useState([]);
+	const [postgre, setPostgre] = React.useState([]);
+	const [mongodb, setMongodb] = React.useState([]);
 	useEffect(() => {
 		getSubCategory(3).then(function (result) {
 			setSubTitles(result);
+		});
+		getContent(14).then(function (result) {
+			setMysql(result);
+		});
+		getContent(15).then(function (result) {
+			setPostgre(result);
+		});
+		getContent(16).then(function (result) {
+			setMongodb(result);
 		});
 	}, []);
 
@@ -84,13 +96,13 @@ export default function Database() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<Page />
+				<Page content={mysql} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<Page />
+				<Page content={postgre} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<Page />
+				<Page content={mongodb} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
 				<Page />

@@ -41,7 +41,7 @@ export default function Page(props) {
 			}}
 		>
 			<div style={{ width: '65%' }} className={classes.leftSide}>
-				<ItemList />
+				<ItemList content={props.content} />
 			</div>
 			<div style={{ width: '30%' }} className={classes.righSide}>
 				{isSignin ? <Feedback /> : null}
