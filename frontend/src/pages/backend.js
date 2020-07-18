@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Page from '../components/page';
-import getContent from '../api/getContent';
+import { getSubCategory } from '../api/getContent';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -56,9 +56,9 @@ export default function Backend() {
 	const [value, setValue] = React.useState(0);
 	const [subTitles, setSubTitles] = React.useState([]);
 	useEffect(() => {
-		let test = getContent;
-		console.log(test);
-		// setSubTitles(getContent());
+		getSubCategory(1).then(function (result) {
+			setSubTitles(result);
+		});
 
 		// async function fetchData() {
 		// 	const response = await fetch(`http://localhost:8000/api/subcategory/1`);
@@ -106,13 +106,13 @@ export default function Backend() {
 				<Page />
 			</TabPanel>
 			<TabPanel value={value} index={4}>
-				Item Five
+				<Page />
 			</TabPanel>
 			<TabPanel value={value} index={5}>
-				Item Six
+				<Page />
 			</TabPanel>
 			<TabPanel value={value} index={6}>
-				Item Seven
+				<Page />
 			</TabPanel>
 		</div>
 	);
