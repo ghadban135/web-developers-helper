@@ -6,8 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Page from '../components/page';
 import { getSubCategory, getContent } from '../api/getContent';
+import ItemList from '../components/itemList';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -100,25 +100,25 @@ export default function Backend() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<Page content={laravel} />
+				<ItemList content={laravel} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<Page content={springBoot} />
+				<ItemList content={springBoot} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<Page content={express} />
+				<ItemList content={express} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
-				<Page content={django} />
+				<ItemList content={django} />
 			</TabPanel>
 			<TabPanel value={value} index={4}>
-				<Page />
+				<ItemList />
 			</TabPanel>
 			<TabPanel value={value} index={5}>
-				<Page />
+				<ItemList />
 			</TabPanel>
 			<TabPanel value={value} index={6}>
-				<Page />
+				<ItemList />
 			</TabPanel>
 		</div>
 	);

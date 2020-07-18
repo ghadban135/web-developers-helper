@@ -6,7 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Page from '../components/page';
+import ItemList from '../components/itemList';
 import { getSubCategory, getContent } from '../api/getContent';
 
 function TabPanel(props) {
@@ -96,25 +96,25 @@ export default function Database() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<Page content={mysql} />
+				<ItemList content={mysql} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<Page content={postgre} />
+				<ItemList content={postgre} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<Page content={mongodb} />
+				<ItemList content={mongodb} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
-				<Page />
+				<ItemList />
 			</TabPanel>
 			<TabPanel value={value} index={4}>
-				<Page />
+				<ItemList />
 			</TabPanel>
 			<TabPanel value={value} index={5}>
-				<Page />
+				<ItemList />
 			</TabPanel>
 			<TabPanel value={value} index={6}>
-				<Page />
+				<ItemList />
 			</TabPanel>
 		</div>
 	);

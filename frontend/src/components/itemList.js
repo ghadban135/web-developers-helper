@@ -4,6 +4,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Pagination from '@material-ui/lab/Pagination';
 import StarIcon from '@material-ui/icons/Star';
 import { yellow } from '@material-ui/core/colors';
+import { getComment } from '../api/getContent';
+import CommentList from './commentList';
+import Feedback from './feedback';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -17,170 +21,107 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: 'center',
 		padding: '10px',
 	},
+	righSide: {
+		backgroundColor: '#ffe6e9',
+		border: 'thin solid rgba(0, 0, 0, 0.12)',
+		borderRadius: '30px',
+		boxShadow:
+			'0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+	},
+	leftSide: {
+		backgroundColor: '#b8ffb8',
+		border: 'thin solid rgba(0, 0, 0, 0.12)',
+		borderRadius: '30px',
+		boxShadow:
+			'0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+	},
+	text: {
+		margin: '40px 10px 0px 10px',
+		textAlign: 'center',
+		color: '#634aed',
+	},
 }));
 
 const ItemList = (props) => {
 	const classes = useStyles();
 	const itemsPerPage = 5;
 	const [page, setPage] = React.useState(1);
-	const [noOfPages] = React.useState(Math.ceil(content.length / itemsPerPage));
+	const [noOfPages] = React.useState(
+		Math.ceil(props.content.length / itemsPerPage)
+	);
+	const [comment, setComment] = React.useState([]);
+	const [isSignin, setSignin] = React.useState(false);
 
 	const handleChange = (event, value) => {
 		setPage(value);
 	};
+	const handleComment = (value) => {
+		setComment([]);
+		getComment(value).then(function (result) {
+			setComment(result);
+		});
+	};
 	return (
-		<div>
-			<List dense compoent='span'>
-				{content
-					.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-					.map((item) => {
-						const labelId = `list-secondary-label-${item.title}`;
-						return (
-							<ListItem key={item.id} button onClick={() => console.log('')}>
-								<ListItemText
-									id={labelId}
-									primary={'Title: ' + item.title}
-									secondary={'Link: ' + item.link}
-									className={classes.item}
-								/>
-								{item.rating}
-								<StarIcon style={{ color: yellow[700] }}></StarIcon>(
-								{item.review} Reviews)
-							</ListItem>
-						);
-					})}
-			</List>
-			<Divider />
-			<Box component='span'>
-				<Pagination
-					count={noOfPages}
-					page={page}
-					onChange={handleChange}
-					defaultPage={1}
-					color='primary'
-					size='large'
-					showFirstButton
-					showLastButton
-					classes={{ ul: classes.paginator }}
-				/>
-			</Box>
+		<div
+			style={{
+				display: 'flex',
+				justifyContent: 'space-between',
+			}}
+		>
+			<div style={{ width: '65%' }} className={classes.leftSide}>
+				<div>
+					<List dense compoent='span'>
+						{props.content
+							.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							.map((item) => {
+								const labelId = `list-secondary-label-${item.title}`;
+								return (
+									<ListItem
+										key={item.id}
+										button
+										onClick={() => handleComment(item.id)}
+									>
+										<ListItemText
+											id={labelId}
+											primary={'Title: ' + item.title}
+											secondary={'Link: ' + item.link}
+											className={classes.item}
+										/>
+										{item.rating}
+										<StarIcon style={{ color: yellow[700] }}></StarIcon>(
+										{item.review} Reviews)
+									</ListItem>
+								);
+							})}
+					</List>
+					<Divider />
+					<Box component='span'>
+						<Pagination
+							count={noOfPages}
+							page={page}
+							onChange={handleChange}
+							defaultPage={1}
+							color='primary'
+							size='large'
+							showFirstButton
+							showLastButton
+							classes={{ ul: classes.paginator }}
+						/>
+					</Box>
+				</div>
+			</div>
+			<div style={{ width: '30%' }} className={classes.righSide}>
+				{isSignin ? <Feedback /> : null}
+				<CommentList comment={comment} />
+				{isSignin ? null : (
+					<Typography className={classes.text}>
+						If you want to add comment or a rating to a specific link please
+						sign in first
+					</Typography>
+				)}
+			</div>
 		</div>
 	);
 };
 
 export default ItemList;
-
-const content = [
-	{
-		id: 1,
-		title: 'front',
-		link: 'link1',
-		rating: 2,
-		review: 9,
-	},
-	{
-		id: 2,
-		title: 'back',
-		link: 'link2',
-		rating: 5,
-		review: 7,
-	},
-	{
-		id: 3,
-		title: 'front',
-		link: 'link1',
-		rating: 2,
-		review: 9,
-	},
-	{
-		id: 4,
-		title: 'back',
-		link: 'link2',
-		rating: 5,
-		review: 7,
-	},
-	{
-		id: 5,
-		title: 'front',
-		link: 'link1',
-		rating: 2,
-		review: 9,
-	},
-	{
-		id: 6,
-		title: 'back',
-		link: 'link2',
-		rating: 5,
-		review: 7,
-	},
-	{
-		id: 7,
-		title: 'front',
-		link: 'link1',
-		rating: 2,
-		review: 9,
-	},
-	{
-		id: 2,
-		title: 'back',
-		link: 'link2',
-		rating: 5,
-		review: 7,
-	},
-	{
-		id: 8,
-		title: 'front',
-		link: 'link1',
-		rating: 2,
-		review: 9,
-	},
-	{
-		id: 9,
-		title: 'back',
-		link: 'link2',
-		rating: 5,
-		review: 7,
-	},
-	{
-		id: 10,
-		title: 'front',
-		link: 'link1',
-		rating: 2,
-		review: 9,
-	},
-	{
-		id: 11,
-		title: 'back',
-		link: 'link2',
-		rating: 5,
-		review: 7,
-	},
-	{
-		id: 12,
-		title: 'front',
-		link: 'link1',
-		rating: 2,
-		review: 9,
-	},
-	{
-		id: 13,
-		title: 'back',
-		link: 'link2',
-		rating: 5,
-		review: 7,
-	},
-	{
-		id: 14,
-		title: 'front',
-		link: 'link1',
-		rating: 2,
-		review: 9,
-	},
-	{
-		id: 15,
-		title: 'back',
-		link: 'link2',
-		rating: 5,
-		review: 7,
-	},
-];

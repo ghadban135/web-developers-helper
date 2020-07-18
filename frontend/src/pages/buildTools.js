@@ -6,8 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Page from '../components/page';
 import { getSubCategory, getContent } from '../api/getContent';
+import ItemList from '../components/itemList';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -100,25 +100,25 @@ export default function BuildTools() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<Page content={npm} />
+				<ItemList content={npm} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<Page content={yarn} />
+				<ItemList content={yarn} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<Page content={docker} />
+				<ItemList content={docker} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
-				<Page content={ssh} />
+				<ItemList content={ssh} />
 			</TabPanel>
 			<TabPanel value={value} index={4}>
-				<Page />
+				<ItemList />
 			</TabPanel>
 			<TabPanel value={value} index={5}>
-				<Page />
+				<ItemList />
 			</TabPanel>
 			<TabPanel value={value} index={6}>
-				<Page />
+				<ItemList />
 			</TabPanel>
 		</div>
 	);

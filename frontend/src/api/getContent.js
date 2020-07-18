@@ -22,7 +22,14 @@ export const getContent = (id) => {
 	return axios
 		.get(`http://localhost:8000/api/content/${id}`)
 		.then(function (response) {
-			// console.log(response.data.content);
 			if (response.data.success) return response.data.content;
+		});
+};
+
+export const getComment = (id) => {
+	return axios
+		.get(`http://localhost:8000/api/content-feedback/${id}`)
+		.then(function (response) {
+			if (response.data.success) return response.data.feedback;
 		});
 };
