@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.background.paper,
 	},
 	item: {
-		maxWidth: '31vw',
+		maxWidth: '30vw',
 		padding: theme.spacing(1.2),
 	},
 	paginator: {
@@ -82,7 +82,7 @@ const ItemList = (props) => {
 									<ListItem
 										key={item.id}
 										button
-										// onClick={() => handleComment(item.id)}
+										onClick={() => handleComment(item.id)}
 									>
 										<ListItemText
 											id={labelId}
