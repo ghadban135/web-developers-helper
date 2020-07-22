@@ -8,6 +8,8 @@ import { getComment } from '../api/getContent';
 import CommentList from './commentList';
 import Feedback from './feedback';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import LinkIcon from '@material-ui/icons/Link';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -15,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.background.paper,
 	},
 	item: {
+		maxWidth: '31vw',
 		padding: theme.spacing(1.2),
 	},
 	paginator: {
@@ -79,7 +82,7 @@ const ItemList = (props) => {
 									<ListItem
 										key={item.id}
 										button
-										onClick={() => handleComment(item.id)}
+										// onClick={() => handleComment(item.id)}
 									>
 										<ListItemText
 											id={labelId}
@@ -87,6 +90,9 @@ const ItemList = (props) => {
 											secondary={'Link: ' + item.link}
 											className={classes.item}
 										/>
+										<IconButton>
+											<LinkIcon onClick={() => window.open(item.link)} />
+										</IconButton>
 										{item.rating}
 										<StarIcon style={{ color: yellow[700] }}></StarIcon>(
 										{item.review} Reviews)

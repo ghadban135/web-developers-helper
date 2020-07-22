@@ -15,8 +15,8 @@ class CreateContentTable extends Migration
     {
         Schema::create('content', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->string('link')->unique();
+            $table->text('title')->nullable();
+            $table->text('link');
             $table->float('rating')->nullable();
             $table->integer('review')->nullable();
             $table->integer('subcategory_id');
