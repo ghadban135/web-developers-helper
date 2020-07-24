@@ -76,7 +76,7 @@ export default function PermanentDrawerLeft(props) {
 			localStorage.setItem('token', result.access_token);
 			const Toast = Swal.mixin({
 				toast: true,
-				position: 'top-end',
+				position: 'bottom-end',
 				showConfirmButton: false,
 				timer: 3000,
 				timerProgressBar: true,
@@ -91,7 +91,6 @@ export default function PermanentDrawerLeft(props) {
 				title: 'Signed in successfully',
 			});
 			setIsLogin(true);
-			// window.location = '/dashboard';
 		} else {
 			Swal.fire('Cancelled', ' Invalid Email or password.', 'error');
 		}

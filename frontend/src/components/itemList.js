@@ -54,11 +54,13 @@ const ItemList = (props) => {
 	);
 	const [comment, setComment] = React.useState([]);
 	const [isSignin, setSignin] = React.useState(false);
+	const [commentId, setCommentId] = React.useState(false);
 
 	const handleChange = (event, value) => {
 		setPage(value);
 	};
 	const handleComment = (value) => {
+		setCommentId(value);
 		setComment([]);
 		getComment(value).then(function (result) {
 			setComment(result);
@@ -117,7 +119,7 @@ const ItemList = (props) => {
 				</div>
 			</div>
 			<div style={{ width: '30%' }} className={classes.righSide}>
-				{props.isLogin ? <Feedback /> : null}
+				{props.isLogin ? <Feedback commentId={commentId} /> : null}
 				<CommentList comment={comment} />
 				{props.isLogin ? null : (
 					<Typography className={classes.text}>
