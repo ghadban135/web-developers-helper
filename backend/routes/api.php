@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
+Route::get('/check', 'AuthController@check');
 
 Route::get('/subcategory', 'SubcategoryController@index');
 Route::get('/subcategory/{id}', 'SubcategoryController@show');

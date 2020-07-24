@@ -6,7 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { getSubCategory, getContent } from '../api/getContent';
+import { getSubCategory, getContent, check } from '../api/getContent';
 import ItemList from '../components/itemList';
 
 function TabPanel(props) {
@@ -59,7 +59,11 @@ export default function BuildTools() {
 	const [yarn, setYarn] = React.useState([]);
 	const [docker, setDocker] = React.useState([]);
 	const [ssh, setSsh] = React.useState([]);
+	const [isLogin, setIsLogin] = React.useState('');
 	useEffect(() => {
+		check().then(function (result) {
+			setIsLogin(result);
+		});
 		getSubCategory(5).then(function (result) {
 			setSubTitles(result);
 		});
@@ -100,16 +104,16 @@ export default function BuildTools() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<ItemList content={npm} />
+				<ItemList content={npm} isLogin={isLogin} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<ItemList content={yarn} />
+				<ItemList content={yarn} isLogin={isLogin} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<ItemList content={docker} />
+				<ItemList content={docker} isLogin={isLogin} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
-				<ItemList content={ssh} />
+				<ItemList content={ssh} isLogin={isLogin} />
 			</TabPanel>
 			<TabPanel value={value} index={4}>
 				<ItemList />

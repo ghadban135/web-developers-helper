@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,6 +21,15 @@ import MobileApp from '../pages/mobileApp';
 import TeamCollabration from '../pages/teamCollaboration';
 import Testing from '../pages/testing';
 import PrograminLanguage from '../pages/programingLanguage';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { check } from '../api/getContent';
 
 export default function PermanentDrawerLeft(props) {
 	const classes = useStyles();
@@ -36,6 +45,73 @@ export default function PermanentDrawerLeft(props) {
 	];
 
 	const [value, setValue] = useState('home');
+	const [open, setOpen] = React.useState(false);
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [isLogin, setIsLogin] = React.useState('');
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+	const onSubmit = async (e) => {
+		// e.preventDefault();
+		const body = new FormData();
+		body.append('email', email);
+		body.append('password', password);
+		const response = await fetch(`http://localhost:8000/api/login`, {
+			method: 'POST',
+			body,
+		});
+
+		const result = await response.json();
+		console.log(result);
+		setEmail('');
+		setPassword('');
+		handleClose();
+		if (result.access_token) {
+			localStorage.setItem('token', result.access_token);
+			const Toast = Swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				onOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer);
+					toast.addEventListener('mouseleave', Swal.resumeTimer);
+				},
+			});
+
+			Toast.fire({
+				icon: 'success',
+				title: 'Signed in successfully',
+			});
+			setIsLogin(true);
+			// window.location = '/dashboard';
+		} else {
+			Swal.fire('Cancelled', ' Invalid Email or password.', 'error');
+		}
+	};
+	const handleLogOut = async () => {
+		const response = await fetch(`http://localhost:8000/api/logout`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${localStorage.token}`,
+			},
+		});
+		setIsLogin(false);
+	};
+	useEffect(() => {
+		check().then(function (result) {
+			console.log(result);
+			setIsLogin(result);
+		});
+	}, []);
+
 	return (
 		<div className={classes.root}>
 			<CssBaseline />
@@ -57,7 +133,15 @@ export default function PermanentDrawerLeft(props) {
 							inputProps={{ 'aria-label': 'search' }}
 						/>
 					</div>
-					<Button color='inherit'>Login</Button>
+					{!isLogin ? (
+						<Button color='inherit' onClick={handleClickOpen}>
+							Login
+						</Button>
+					) : (
+						<Button color='inherit' onClick={handleLogOut}>
+							Logout
+						</Button>
+					)}
 				</Toolbar>
 			</AppBar>
 			<Drawer
@@ -86,6 +170,49 @@ export default function PermanentDrawerLeft(props) {
 			<main className={classes.content}>
 				<Tabswitch value={value} match={props.match} />
 			</main>
+			<Dialog
+				fullWidth={true}
+				maxWidth={'xs'}
+				open={open}
+				onClose={handleClose}
+				aria-labelledby='form-dialog-title'
+			>
+				<DialogTitle id='form-dialog-title' style={{ textAlign: 'center' }}>
+					Login Form
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText style={{ textAlign: 'center' }}>
+						Login to add comment or a rating to a specific link
+					</DialogContentText>
+					<TextField
+						autoFocus
+						margin='dense'
+						label='Email Address'
+						type='email'
+						name='email'
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						fullWidth
+					/>
+					<TextField
+						margin='dense'
+						label='Password'
+						type='password'
+						name='password'
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+						fullWidth
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose} color='primary'>
+						Cancel
+					</Button>
+					<Button onClick={onSubmit} color='primary'>
+						Login
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</div>
 	);
 }

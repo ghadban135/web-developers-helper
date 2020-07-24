@@ -6,7 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { getSubCategory, getContent } from '../api/getContent';
+import { getSubCategory, getContent, check } from '../api/getContent';
 import ItemList from '../components/itemList';
 
 function TabPanel(props) {
@@ -59,7 +59,12 @@ export default function Backend() {
 	const [springBoot, setSpringBoot] = React.useState([]);
 	const [express, setExpress] = React.useState([]);
 	const [django, setDjango] = React.useState([]);
+	const [isLogin, setIsLogin] = React.useState('');
 	useEffect(() => {
+		check().then(function (result) {
+			console.log(result);
+			setIsLogin(result);
+		});
 		getSubCategory(1).then(function (result) {
 			setSubTitles(result);
 		});
@@ -100,16 +105,16 @@ export default function Backend() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<ItemList content={laravel} />
+				<ItemList content={laravel} isLogin={isLogin} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<ItemList content={springBoot} />
+				<ItemList content={springBoot} isLogin={isLogin} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
-				<ItemList content={express} />
+				<ItemList content={express} isLogin={isLogin} />
 			</TabPanel>
 			<TabPanel value={value} index={3}>
-				<ItemList content={django} />
+				<ItemList content={django} isLogin={isLogin} />
 			</TabPanel>
 			<TabPanel value={value} index={4}>
 				<ItemList />

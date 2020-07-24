@@ -117,9 +117,9 @@ const ItemList = (props) => {
 				</div>
 			</div>
 			<div style={{ width: '30%' }} className={classes.righSide}>
-				{isSignin ? <Feedback /> : null}
+				{props.isLogin ? <Feedback /> : null}
 				<CommentList comment={comment} />
-				{isSignin ? null : (
+				{props.isLogin ? null : (
 					<Typography className={classes.text}>
 						If you want to add comment or a rating to a specific link please
 						sign in first

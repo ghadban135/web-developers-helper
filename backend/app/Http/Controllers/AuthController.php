@@ -37,6 +37,12 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Successfully logged out']);
     }
+    public function check(){
+        if (auth()->check()) {
+            return response()->json(['isLogin' => true]);
+        }
+        return response()->json(['isLogin' => false]);
+    }
 
     protected function respondWithToken($token)
     {

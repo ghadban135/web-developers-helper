@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ItemList from '../components/itemList';
-import { getSubCategory, getContent } from '../api/getContent';
+import { getSubCategory, getContent, check } from '../api/getContent';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -57,7 +57,12 @@ export default function Testing() {
 	const [subTitles, setSubTitles] = React.useState([]);
 	const [methadologie, setMethadologie] = React.useState([]);
 	const [rumers, setRumers] = React.useState([]);
+	const [isLogin, setIsLogin] = React.useState('');
 	useEffect(() => {
+		check().then(function (result) {
+			console.log(result);
+			setIsLogin(result);
+		});
 		getSubCategory(7).then(function (result) {
 			setSubTitles(result);
 		});
@@ -92,10 +97,10 @@ export default function Testing() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<ItemList content={methadologie} />
+				<ItemList content={methadologie} isLogin={isLogin} />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<ItemList content={rumers} />
+				<ItemList content={rumers} isLogin={isLogin} />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
 				<ItemList />

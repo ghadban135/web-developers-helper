@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
 	main: {
 		display: 'flex',
 		justifyContent: 'space-around',
-		paddingTop: '15px',
+		paddingTop: '30px',
 	},
 }));
 
@@ -17,7 +17,7 @@ export default function Feedback(props) {
 	const classes = useStyles();
 	return (
 		<div className={classes.main}>
-			<div>
+			<div style={{ marginLeft: '25px' }}>
 				<SimpleRating />
 				<TextField
 					id='filled-multiline-static'
@@ -29,7 +29,7 @@ export default function Feedback(props) {
 					style={{ fontFamily: 'Muli-Regular', fontSize: '12px' }}
 				/>
 			</div>
-			<div>
+			<div style={{ marginRight: '25px' }}>
 				<Button variant='outlined' color='primary'>
 					Save
 				</Button>
